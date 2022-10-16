@@ -1,5 +1,4 @@
 import pygame
-import sys
 import random
 import math
 import numpy as np
@@ -13,23 +12,21 @@ GREEN = (0  , 255,   0)
 BLUE  = (0  , 0  , 255)
 WHITE = (255, 255, 255)
 
-global tileX                                        # tamanho horizontal do tile
-global tileY                                        # tamanho vertical do tile 
-global sizeP                                        # tamanho do pixel
-
-tileX = 100
-tileY = 100
-sizeP = 10
+tileX = 300
+tileY = 300
+sizeP = 300
 
 HEIGHT = 600                                        # tamanho janela 
 WIDTH  = 600                                        # tamanho janela 
 
 SIZE_SCREEN = [HEIGHT+1, WIDTH+1]
 
-vectors = []
+vectors = []                                         # vetores (linha verdes)
+
 dists = []
 
 def main():
+    global dists
     pygame.init()
     
     SCREEN = pygame.display.set_mode(SIZE_SCREEN)
@@ -53,8 +50,10 @@ def main():
 
         if keys[pygame.K_ESCAPE]:
             pygame.quit()
-            RUN = False        
-        
+            RUN = False
+
+        if RUN == False:
+            break
         # img = pygame.image.load('img.png')
         # SCREEN.blit(img, [0,0])
 
@@ -70,13 +69,12 @@ def main():
             dists.append([])
             for x in range(int(WIDTH / sizeP)):
                 tile = [y // 10, x // 10]
-                # print(x, y)
-
+                
 #(tile[0] * tileX) + (tile[0] * tileX), (tile[1] * tileY) + (tile[1] * tileY)
 
 
-
-                dists[y].append([[[tile[0] * tileY + 100, tile[1] * tileX], [x * sizeP, y * sizeP]]])
+                dists[y].append([[tile[0] * tileY + 100, tile[1] * tileX], [x * sizeP, y * sizeP]])
+                # dists[y].append([[[tile[0] * tileY + 100, tile[1] * tileX], [x * sizeP, y * sizeP]]])
                 # dists[y].append([[[tile[0] * tileY,  tile[1] * tileX +100], [y * sizeP, x * sizeP]]])
                 # dists[y].append([[[tile[0] * tileY + 100, tile[1] * tileY + 100], [y * sizeP, x * sizeP]]])
                 # dists[y].append([[[tile[0] * tileY, tile[1] * tileX], [y * sizeP, x * sizeP]]])
@@ -91,8 +89,7 @@ def main():
                 # pygame.draw.rect(SCREEN,
                 #                 [color, color, color],
                 #                 [x*sizeP, y*sizeP, x*sizeP+sizeP, y*sizeP+sizeP]) 
-        print(str(dists))
-        pygame.quit()
+
         for x in range(int((HEIGHT / tileX)+1)):
             for y in range(int((WIDTH / tileY)+1)):
                 pygame.draw.line(SCREEN, GREEN, [vectors[x][y][0][0], vectors[x][y][0][1]], [vectors[x][y][1][0], vectors[x][y][1][1]])
@@ -101,10 +98,10 @@ def main():
                                [y*tileY, x*tileX, y*tileY+tileY+1, x*tileX+tileX+1], 1)
 
         pygame.display.update()
-        # print(vectors)
     
 
 if __name__ == '__main__':
     print('em execução')
     main()
+    print(dists)
     
