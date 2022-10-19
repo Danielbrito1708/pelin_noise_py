@@ -1,7 +1,11 @@
 import pygame
 import random
 import math
+import numpy as np 
 from pygame.locals import *
+
+# esse recado é para o futuro daniel(cara que fez esse codigo): eu espero que esse não seja seu portifolio
+# boa sorte você 
 
 FPS = 1
     
@@ -68,21 +72,23 @@ def main():
         
         for y in range(int(HEIGHT / sizeP)):
             for x in range(int(WIDTH / sizeP)):
-                tile = [x // 10, y // 10]
 
+                tile = [x // 10, y // 10]
+                
                 a = [[x * sizeP, y * sizeP],             [tile[0] * tileX, tile[1] * tileY]]
                 b = [[x * sizeP, y * sizeP],       [tile[0] * tileX +100,  tile[1] * tileY]]
                 c = [[x * sizeP, y * sizeP], [tile[0] * tileX + 100, tile[1] * tileY + 100]]
                 d = [[x * sizeP, y * sizeP],       [tile[0] * tileX, tile[1] * tileY + 100]]
 
-                PeA = a[1][0] * (vectors[tile[1]][tile[0]][1][0] + a[1][0]) * (vectors[tile[1]][tile[0]][1][1] + a[1][0])
-                PeB = b[1][0] * (vectors[tile[1]][tile[0]+1][1][0] + b[1][0]) * (vectors[tile[1]][tile[0]+1][1][1] + b[1][0])
-                PeC = c[1][0] * (vectors[tile[1]+1][tile[0]+1][1][0] + c[1][0]) * (vectors[tile[1]+1][tile[0]+1][1][1] + c[1][0])
-                PeD = d[1][0] * (vectors[tile[1]+1][tile[0]][1][0] + d[1][0]) * (vectors[tile[1]+1][tile[0]][1][1] + d[1][0])
+                PeA = (a[1][0] * vectors[tile[1]]  [tile[0]]  [1][0]) + (a[1][1] * vectors[tile[1]]  [tile[0]]  [1][1])
+                PeB = (b[1][0] * vectors[tile[1]]  [tile[0]+1][1][0]) + (b[1][1] * vectors[tile[1]]  [tile[0]+1][1][1])
+                PeC = (c[1][0] * vectors[tile[1]+1][tile[0]+1][1][0]) + (c[1][1] * vectors[tile[1]+1][tile[0]+1][1][1])
+                PeD = (d[1][0] * vectors[tile[1]+1][tile[0]]  [1][0]) + (d[1][1] * vectors[tile[1]+1][tile[0]]  [1][1])
 
                 color = media(PeA, PeB, PeC, PeD)
-                color = 100 if color > 2000000 else 255
-                 
+                color = 100 if color > 34248 else 255
+                
+                print (np.array([PeA,PeB,PeC,PeD]))
 
                 # pygame.draw.line(SCREEN, BLUE, a[0], a[1])
                 # pygame.draw.line(SCREEN, BLUE, b[0], b[1])
@@ -107,12 +113,4 @@ def main():
 if __name__ == '__main__':
     print('em execução')
     main()
-    print(vectors)
-
-[[[[0, 0], [61, 78]], [[0, 100], [99, 99]], [[0, 200], [-100, 183]], [[0, 300], [20, 397]], [[0, 400], [89, 355]], [[0, 500], [-100, 511]], [[0, 600], [41, 690]]],
- [[[100, 0], [85, -100]], [[100, 100], [27, 168]], [[100, 200], [123, 296]], [[100, 300], [197, 320]], [[100, 400], [42, 481]], [[100, 500], [146, 587]], [[100, 600], [24, 533]]], 
- [[[200, 0], [175, 96]], [[200, 100], [154, 188]], [[200, 200], [106, 235]], [[200, 300], [112, 349]], [[200, 400], [289, 355]], [[200, 500], [185, 400]], [[200, 600], [145, 683]]],
- [[[300, 0], [304, 99]], [[300, 100], [202, 121]], [[300, 200], [247, 113]], [[300, 300], [347, 212]], [[300, 400], [383, 345]], [[300, 500], [321, 402]], [[300, 600], [297, 699]]],
- [[[400, 0], [496, 25]], [[400, 100], [490, 57]], [[400, 200], [491, 238]], [[400, 300], [449, 212]], [[400, 400], [302, 375]], [[400, 500], [375, 402]], [[400, 600], [309, 643]]], 
- [[[500, 0], [599, -6]], [[500, 100], [411, 52]], [[500, 200], [573, 132]], [[500, 300], [475, 396]], [[500, 400], [513, 300]], [[500, 500], [414, 552]], [[500, 600], [586, 549]]], 
- [[[600, 0], [646, 87]], [[600, 100], [693, 133]], [[600, 200], [587, 100]], [[600, 300], [580, 201]], [[600, 400], [578, 301]], [[600, 500], [499, 501]], [[600, 600], [517, 656]]]]
+    # print(vectors)
